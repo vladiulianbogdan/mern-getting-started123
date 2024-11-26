@@ -1,0 +1,35 @@
+backend:
+    functions:
+        - entry: app.mjs
+          handler: app
+          name: mern-getting-started
+          path: ./
+          port: 3000
+          type: httpServer
+    language:
+        name: js
+        packageManager: npm
+    path: server
+    scripts:
+        deploy: npm install
+        local: npm install
+frontend:
+    environment:
+        VITE_API_URL: ${{ backend.functions.mern-getting-started.url }}
+    path: client
+    publish: ./dist
+    scripts:
+        build: npm run build
+        deploy: npm install
+        start:
+            - npm install
+            - npm run dev
+    subdomain: mern-getting-started444
+name: mern-getting-started444
+region: us-east-1
+services:
+    databases:
+        - name: my-mongo-db
+          region: us-east-1
+          type: mongo-atlas
+yamlVersion: 2
